@@ -1,32 +1,77 @@
 import React , { Component } from 'react';
 import Menu from './MenuComponent';
 import Dishdetail from './DishdetailComponent';
-import {DISHES} from '../shared/dishes';
-import { View, ScrollView,SafeAreaView } from 'react-native';
+import { View, Platform } from 'react-native';
+import { createStackNavigator, createDrawerNavigator } from 'react-navigation';
+import Error from './ErrorBoundary';
+import Home from './HomeComponent';
 
-class Main extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            dishes : DISHES,
-            selectedDish: null
+const MenuNavigator = createStackNavigator({
+    Menu: { screen: Menu },
+    Dishdetail: { screen: Dishdetail }
+},
+{
+    initialRouteName: 'Menu',
+    navigationOptions: {
+        headerStyle: {
+            backgroundColor: "#512DA8",
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+            color: "#fff"            
         }
     }
+}
+);
 
-    onDishSelected(dishId){
-        this.setState({
-            selectedDish : dishId
-        });
+//creatstacknavigator provide status bar , title to screen. 
+const HomeNavigator = createStackNavigator({
+    Home: { screen: Home },
+},
+{
+    navigationOptions: {
+        headerStyle: {
+            backgroundColor: "#512DA8",
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+            color: "#fff"            
+        }
+    }
+});
+
+const MainNavigator = createDrawerNavigator({
+    Home: {
+        screen: HomeNavigator,
+        navigationOptions: {
+            title: 'Home',
+            drawerLabel: 'Home'
+        }
+    },
+    Menu: {
+        screen: MenuNavigator,
+        navigationOptions: {
+            title: 'Menu',
+            drawerLabel: 'Menu'
+        }
+    }
+},{
+    drawerBackgroundColor: '#D1C4E9'
+})
+
+class Main extends Component{
+
+    constructor(props){
+        super(props);
     }
 
     render() {
         return(
-            <SafeAreaView style={{flex: 1}}>
-                <ScrollView>
-                    <Menu dishes= {this.state.dishes} onPress={(dishId) =>this.onDishSelected(dishId)} />
-                    <Dishdetail dish={this.state.dishes.filter((dish)=> dish.id == this.state.selectedDish)[0]} />
-                </ScrollView>
-            </SafeAreaView>
+                <View style={{flex : 1 }}>
+                   {/* // <Error> */}
+                    <MainNavigator />
+                    {/* </Error> */}
+                </View>
         );
     }
 }

@@ -1,29 +1,50 @@
 import React  from 'react';
 import { View, FlatList } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import { DISHES } from '../shared/dishes';
+// import Error  from './ErrorBoundary';
 
-function Menu(props){
+class Menu extends React.Component {
+    
+    constructor(props){
+        super(props);
+        this.state = {
+            dishes : DISHES
+        }
+    }
 
-    const renderMenuItem = ({item, index}) =>{
-        return (
-            <ListItem 
-                key={index}
-                title={item.name}
-                subtitle={item.description}
-                hideChevron={true} //to hide right arrow as used in ios
-                onPress={()=> props.onPress(item.id)}
-                leftAvatar={{source: require('./images/uthappizza.png')}}
-            />
-        );
+    static navigationOptions = {
+        title : 'Menu'
     };
 
-    return(
-        <FlatList
-            data={props.dishes} // each element in array becomes item
-            renderItem={renderMenuItem}
-            keyExtractor={item => item.id.toString()} //keyExtractor take string as value. 
-        />
-    );
+    render(){
+
+        // const { navigate } = this.props.navigation;
+
+        const renderMenuItem = ({item, index}) =>{
+            return (
+                <ListItem 
+                    key={index}
+                    title={item.name}
+                    subtitle={item.description}
+                    hideChevron={true} //to hide right arrow as used in ios
+                    onPress={()=>this.props.navigation.navigate('Dishdetail',{dishId: item.id})}
+                    leftAvatar={{source: require('./images/uthappizza.png')}}
+                />
+            );
+        };
+
+
+        return(
+            // <Error>
+            <FlatList
+                data={this.state.dishes} // each element in array becomes item
+                renderItem={renderMenuItem}
+                keyExtractor={item => item.id.toString()} //keyExtractor take string as value. 
+            />
+            // {/* </Error>  */}
+        );
+    }
 
     
 }
