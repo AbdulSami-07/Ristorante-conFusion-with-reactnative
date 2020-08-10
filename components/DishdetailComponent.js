@@ -2,7 +2,6 @@ import React , { Component } from 'react';
 import { View, Text } from 'react-native';
 import { Card } from 'react-native-elements';
 import { DISHES } from '../shared/dishes';
-import Error from './ErrorBoundary';
 
 
 function RenderDish(props){
@@ -42,13 +41,11 @@ class Dishdetail extends Component {
 
     render(){
         
-        const dishId= this.props.navigation.getParam('dishId');
+        const dishId= this.props.navigation.getParam('dishId','');
 
         console.log(dishId);
         return(
-            // <Error>
              <RenderDish dish={this.state.dishes[+dishId]} /> //+ will change to number.
-            // </Error>
         );
     }
     

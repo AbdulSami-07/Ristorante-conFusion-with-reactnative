@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
+import { Image } from 'react-native-elements';
 
 class Error extends Component {
     constructor(props) {
@@ -19,8 +20,11 @@ class Error extends Component {
       if (this.state.hasError) {      
           // You can render any custom fallback UI
         return (
-            <View>
-                <Text>Something went wrong</Text>
+            <View style={{flex : 1}}>
+                <Image
+                    source={require('./images/oops.png')}
+                    style={{ width: 100, height: 200 }}
+                  />
             </View>
         );
         }

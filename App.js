@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
-// import { StatusBar } from 'expo-status-bar';
-// import { View } from 'react-native';
 import Main from './components/MainComponent';
+import Error from './components/ErrorBoundary';
+
 
 export default class App extends Component{
 
   render(){
     return(
-      // <View >
-        
-      <Main />
-    // </View>
-      
+      <Error>
+        <Main />
+      </Error>
     );
   }
 }

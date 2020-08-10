@@ -3,8 +3,8 @@ import Menu from './MenuComponent';
 import Dishdetail from './DishdetailComponent';
 import { View, Platform } from 'react-native';
 import { createStackNavigator, createDrawerNavigator } from 'react-navigation';
-import Error from './ErrorBoundary';
 import Home from './HomeComponent';
+import { Icon } from 'react-native-elements';
 
 const MenuNavigator = createStackNavigator({
     Menu: { screen: Menu },
@@ -68,9 +68,7 @@ class Main extends Component{
     render() {
         return(
                 <View style={{flex : 1 }}>
-                   {/* // <Error> */}
                     <MainNavigator />
-                    {/* </Error> */}
                 </View>
         );
     }
