@@ -1,9 +1,16 @@
 import React , { Component } from 'react';
 import { Card, ListItem, Text } from 'react-native-elements';
 import { ScrollView, FlatList, SafeAreaView } from 'react-native';
-import { LEADERS } from '../shared/leaders';
+import { connect } from 'react-redux';
+import { baseUrl } from '../shared/baseUrl';
 
-function History(props){
+const mapStateToProps = (state) => {
+    return ({
+        leaders : state.leaders
+    });
+}
+
+function RenderHistory(props){
     return(
         <Card>
             <Text style={{fontWeight: 'bold',textAlign: 'center'}}>
@@ -21,13 +28,6 @@ function History(props){
 
 class About extends Component{
     
-    constructor(props){
-        super(props);
-        this.state = {
-            leaders : LEADERS
-        }
-    }
-
     static navigationOptions = {
         title : 'About us'
     };
@@ -40,7 +40,7 @@ class About extends Component{
                     title={item.name}
                     subtitle={item.description}
                     hideChevron={true} //to hide right arrow as used in ios
-                    leftAvatar={{source: require('./images/alberto.png')}}
+                    leftAvatar={{source: {uri: baseUrl + item.image}}}
                 />
             );
         };
@@ -49,10 +49,10 @@ class About extends Component{
         return(
             <SafeAreaView>
                 <ScrollView>
-                    <History />
+                    <RenderHistory />
                     <Card title="Corporate Leadership">
                         <FlatList
-                            data={this.state.leaders} // each element in array becomes item
+                            data={this.props.leaders.leaders} // each element in array becomes item
                             renderItem={renderMenuItem}
                             keyExtractor={item => item.id.toString()} //keyExtractor take string as value. 
                         />
@@ -64,4 +64,4 @@ class About extends Component{
         
 }
 
-export default About;
+export default connect(mapStateToProps)(About);

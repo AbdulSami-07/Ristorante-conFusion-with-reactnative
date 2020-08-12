@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
 import Main from './components/MainComponent';
 import Error from './components/ErrorBoundary';
+import { Provider } from 'react-redux';
+import { ConfigureStore } from './redux/configureStore';
 
-
+const store = ConfigureStore();
 export default class App extends Component{
 
   render(){
     return(
-      <Error>
-        <Main />
-      </Error>
+        <Provider store={store}>
+      {/* <Error> */}
+
+          <Main />
+          {/* </Error> */}
+        </Provider>
     );
   }
 }

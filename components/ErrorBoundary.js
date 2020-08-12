@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
-import { Image } from 'react-native-elements';
+import { Text, View, Image } from 'react-native';
 
 class Error extends Component {
     constructor(props) {
@@ -10,10 +9,14 @@ class Error extends Component {
   
     static getDerivedStateFromError(error) {   
          // Update state so the next render will show the fallback UI. 
-           return { hasError: true };
+           
+           return console.log(error.toString());
           }
     componentDidCatch(error, errorInfo) {
             // You can also log the error to an error reporting service    
+            this.setState({
+              hasError: true
+            })
             logErrorToMyService(error, errorInfo);  
         }
     render() {

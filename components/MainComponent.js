@@ -7,6 +7,18 @@ import Home from './HomeComponent';
 import About from './AboutComponent';
 import Contact from './ContactComponent';
 import { Icon } from 'react-native-elements';
+import { connect } from 'react-redux';
+import { fetchComments, fetchDishes, fetchLeaders, fetchPromos} from '../redux/ActionCreators';
+
+
+const mapDispatchToProps = dispatch =>{
+    return ({
+        fetchComments: () => dispatch(fetchComments()),
+        fetchPromos: () => dispatch(fetchPromos()),
+        fetchLeaders: () => dispatch(fetchLeaders()),
+        fetchDishes: () => dispatch(fetchDishes())
+    });
+};
 
 const MenuNavigator = createStackNavigator({
     Menu: { screen: Menu,
@@ -91,7 +103,6 @@ const CustomDrawerContentComponent = (props) => (
     <ScrollView>
         {/* SafeAreaView is for iphoneX that define part of safe area where nothing will be layed out.   */}
         <SafeAreaView style={styles.container}
-            forceInset={{ top: 'always', horizontal: 'never'}}
         >
         {/* this View will be shown over Draw items already in drawer */}
             <View style={styles.drawerHeader}>
@@ -182,9 +193,15 @@ const MainNavigator = createDrawerNavigator({
 });
 
 class Main extends Component{
-
     constructor(props){
         super(props);
+    }
+
+    componentDidMount(){
+        this.props.fetchDishes();
+        this.props.fetchLeaders();
+        this.props.fetchPromos();
+        this.props.fetchComments();
     }
 
     render() {
@@ -219,4 +236,4 @@ const styles = StyleSheet.create({
         height: 60
     }
 });
-export default Main;
+export default connect(null,mapDispatchToProps)(Main);
