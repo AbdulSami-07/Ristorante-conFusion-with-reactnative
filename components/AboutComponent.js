@@ -3,6 +3,7 @@ import { Card, ListItem, Text } from 'react-native-elements';
 import { ScrollView, FlatList, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
+import { Loading } from './LoadingComponent';
 
 const mapStateToProps = (state) => {
     return ({
@@ -13,7 +14,7 @@ const mapStateToProps = (state) => {
 function RenderHistory(props){
     return(
         <Card>
-            <Text style={{fontWeight: 'bold',textAlign: 'center'}}>
+            <Text style={{fontWeight: 'bold',textAlign: 'center',fontSize: 16}}>
             Our History
             {'\n\n'}
             </Text>
@@ -45,21 +46,46 @@ class About extends Component{
             );
         };
 
-
-        return(
-            <SafeAreaView>
-                <ScrollView>
-                    <RenderHistory />
-                    <Card title="Corporate Leadership">
-                        <FlatList
-                            data={this.props.leaders.leaders} // each element in array becomes item
-                            renderItem={renderMenuItem}
-                            keyExtractor={item => item.id.toString()} //keyExtractor take string as value. 
-                        />
-                    </Card>
-                </ScrollView>
-            </SafeAreaView>
-        );
+        if (this.props.leaders.isLoading){
+            return(
+                <SafeAreaView>
+                    <ScrollView>
+                        <RenderHistory />
+                        <Card title="Corporate Leadership">
+                            <Loading />
+                        </Card>
+                    </ScrollView>
+                </SafeAreaView>
+            );
+        }
+        else if (this.props.leaders.errMess){
+            return(
+                <SafeAreaView>
+                    <ScrollView>
+                        <RenderHistory />
+                        <Card title="Corporate Leadership">
+                            <Text>{this.props.leaders.errMess}</Text>
+                        </Card>
+                    </ScrollView>
+                </SafeAreaView>
+            );
+        }
+        else{
+                return(
+                    <SafeAreaView>
+                        <ScrollView>
+                            <RenderHistory />
+                            <Card title="Corporate Leadership">
+                                <FlatList
+                                    data={this.props.leaders.leaders} // each element in array becomes item
+                                    renderItem={renderMenuItem}
+                                    keyExtractor={item => item.id.toString()} //keyExtractor take string as value. 
+                                />
+                            </Card>
+                        </ScrollView>
+                    </SafeAreaView>
+                );
+        }
     }
         
 }
