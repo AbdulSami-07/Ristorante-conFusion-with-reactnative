@@ -1,6 +1,7 @@
 import React , { Component } from 'react';
 import Menu from './MenuComponent';
 import Dishdetail from './DishdetailComponent';
+import Reservation from './ReservationComponent';
 import { View, Platform, Image, StyleSheet, ScrollView, SafeAreaView, Text } from 'react-native';
 import { createStackNavigator, createDrawerNavigator, DrawerItems  } from 'react-navigation';
 import Home from './HomeComponent';
@@ -83,6 +84,24 @@ const AboutNavigator = createStackNavigator({
 
 const ContactNavigator = createStackNavigator({
     Contact: {screen : Contact},  
+},
+{
+    navigationOptions: ({navigation}) => ({
+        headerStyle: {
+            backgroundColor: "#512DA8",
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+            color: "#fff"            
+        },
+        headerLeft : <Icon name="menu" size={24} color='white' iconStyle={{marginLeft: 5}} 
+        onPress={() => navigation.toggleDrawer()}
+        />
+    })
+});
+
+const ReservationNavigator = createStackNavigator({
+    Contact: {screen : Reservation},  
 },
 {
     navigationOptions: ({navigation}) => ({
@@ -182,6 +201,22 @@ const MainNavigator = createDrawerNavigator({
                     //type tell which font library to use. 
                     type='font-awesome'
                     size={22}
+                    color={tintColor}
+                />
+            )
+        }
+    },
+    Reservation: {
+        screen: ReservationNavigator,
+        navigationOptions: {
+            title: 'Reserve Table',
+            drawerLabel: 'Reserve Table',
+            drawerIcon : ({tintColor}) =>(
+                <Icon 
+                    name="cutlery"
+                    //type tell which font library to use. 
+                    type='font-awesome'
+                    size={24}
                     color={tintColor}
                 />
             )
