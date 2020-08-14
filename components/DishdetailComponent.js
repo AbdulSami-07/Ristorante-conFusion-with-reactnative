@@ -4,6 +4,7 @@ import { Card, Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
 import { postFavorite } from '../redux/ActionCreators';
+import moment from 'moment';
 
 const mapStateToProps = (state) => {
     return ({
@@ -26,7 +27,8 @@ function RenderComments(props){
     const comments = props.comments;
     
     const renderCommentItem = ({item,index}) =>{
-        const date =  new Intl.DateTimeFormat('en-us',{year :'numeric',month:'short',day:'2-digit'}).format(new Date(item.date));
+        
+        const date =  moment(new Date).format('ll');
         return(
             <View key={index} style={{margin: 10}}>
                 <Text style={{fontSize : 14}}>{item.comment}</Text>
