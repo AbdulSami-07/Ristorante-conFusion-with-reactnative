@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, StyleSheet, Picker, Switch, Button, Modal } from 'react-native';
-import { Card } from 'react-native-elements';
+import { Card, Icon } from 'react-native-elements';
 import DatePicker from 'react-native-datepicker';
 import moment from 'moment';
 
@@ -74,7 +74,7 @@ class Reservation extends Component{
                         style={{flex: 2, marginRight: 20}}
                         date={this.state.date}
                         format='LLL'
-                        mode='datetime'
+                        mode='date'
                         placeholder='select date and time'
                         minDate={this.state.date}
                         confirmBtnText='Confirm'
@@ -90,7 +90,7 @@ class Reservation extends Component{
                                 marginLeft: 36
                             }
                         }}
-                        onDateChange={(date) => {this.setState({date: date})}}
+                        onDateChange={(date) => this.setState({date: date})}
                     />
                 </View>
                 <View style={styles.formRow}>
@@ -105,7 +105,6 @@ class Reservation extends Component{
                     animationType={'slide'}
                     transparent={false}
                     visible={this.state.showModal}
-                    onDismiss={()=>{this.toggleModal()}}
                     onRequestClose={()=>{this.toggleModal();}}
                 >
                     <View style={styles.modal}>
@@ -117,7 +116,7 @@ class Reservation extends Component{
                             title="Close"
                             onPress={()=>{this.toggleModal(); this.resetForm();}}
                             color='#512DAB'
-                    />
+                        />
                     </View>
                 </Modal>
             </ScrollView>
