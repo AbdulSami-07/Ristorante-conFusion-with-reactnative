@@ -2,11 +2,12 @@ import React , { Component } from 'react';
 import Menu from './MenuComponent';
 import Dishdetail from './DishdetailComponent';
 import Reservation from './ReservationComponent';
-import { View, Platform, Image, StyleSheet, ScrollView, SafeAreaView, Text } from 'react-native';
-import { createStackNavigator, createDrawerNavigator, DrawerItems  } from 'react-navigation';
 import Home from './HomeComponent';
 import About from './AboutComponent';
 import Contact from './ContactComponent';
+import Favorites from './FavoriteComponent';
+import { View, Platform, Image, StyleSheet, ScrollView, SafeAreaView, Text } from 'react-native';
+import { createStackNavigator, createDrawerNavigator, DrawerItems  } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { fetchComments, fetchDishes, fetchLeaders, fetchPromos} from '../redux/ActionCreators';
@@ -118,6 +119,24 @@ const ReservationNavigator = createStackNavigator({
     })
 });
 
+const FavoritesNavigator = createStackNavigator({
+    Contact: {screen : Favorites},  
+},
+{
+    navigationOptions: ({navigation}) => ({
+        headerStyle: {
+            backgroundColor: "#512DA8",
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+            color: "#fff"            
+        },
+        headerLeft : <Icon name="menu" size={24} color='white' iconStyle={{marginLeft: 5}} 
+        onPress={() => navigation.toggleDrawer()}
+        />
+    })
+});
+
 const CustomDrawerContentComponent = (props) => (
     <ScrollView>
         {/* SafeAreaView is for iphoneX that define part of safe area where nothing will be layed out.   */}
@@ -201,6 +220,22 @@ const MainNavigator = createDrawerNavigator({
                     //type tell which font library to use. 
                     type='font-awesome'
                     size={22}
+                    color={tintColor}
+                />
+            )
+        }
+    },
+    Favorites: {
+        screen: FavoritesNavigator,
+        navigationOptions: {
+            title: 'My Favorites',
+            drawerLabel: 'My Favorites',
+            drawerIcon : ({tintColor}) =>(
+                <Icon 
+                    name="heart"
+                    //type tell which font library to use. 
+                    type='font-awesome'
+                    size={24}
                     color={tintColor}
                 />
             )

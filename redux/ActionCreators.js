@@ -218,3 +218,10 @@ export const addComment = (comment) => {
         payload: comment
     });
 }
+
+export const deleteFavorite = (dishId) => {
+    return ({
+        type: ActionTypes.DELETE_FAVORITE,
+        payload: dishId
+    });
+}
