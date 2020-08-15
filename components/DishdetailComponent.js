@@ -60,17 +60,24 @@ function RenderDish(props){
 
     const dish = props.dish;
 
+    handleViewRef = (ref) => this.view = ref; 
+
     const recognizeDrag = ({moveX, moveY, dx, dy}) => {
         if (dx < -200) //Right to Left gesture
             return true;
         else
-            return false
+            return ;
     };
 
     const panResponder = PanResponder.create({
         //this is called when user gesture begins on the screen. 
         onStartShouldSetPanResponder: (evt, gestureState) =>{
             return true;
+        },
+        onPanResponderGrant: () => {
+
+            this.view.rubberBand(1000)
+                .then(endState => console.log(endState.finished ? 'finished': 'cancelled'));
         },
         onPanResponderEnd: (evt, gestureState) => {
             if (recognizeDrag(gestureState))
@@ -97,6 +104,7 @@ function RenderDish(props){
     if(dish != null){
         return (
             <Animatable.View animation="fadeInDown" duration={2000} delay={1000}
+                ref={this.handleViewRef}
                 {...panResponder.panHandlers}
             >
                 <Card
