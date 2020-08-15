@@ -4,6 +4,7 @@ import { ScrollView, FlatList, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
 import { Loading } from './LoadingComponent';
+import * as Animatable from 'react-native-animatable';
 
 const mapStateToProps = (state) => {
     return ({
@@ -62,10 +63,12 @@ class About extends Component{
             return(
                 <SafeAreaView>
                     <ScrollView>
-                        <RenderHistory />
-                        <Card title="Corporate Leadership">
-                            <Text>{this.props.leaders.errMess}</Text>
-                        </Card>
+                        <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
+                            <RenderHistory />
+                            <Card title="Corporate Leadership">
+                                <Text>{this.props.leaders.errMess}</Text>
+                            </Card>
+                        </Animatable.View>
                     </ScrollView>
                 </SafeAreaView>
             );
@@ -74,14 +77,16 @@ class About extends Component{
                 return(
                     <SafeAreaView>
                         <ScrollView>
-                            <RenderHistory />
-                            <Card title="Corporate Leadership">
-                                <FlatList
-                                    data={this.props.leaders.leaders} // each element in array becomes item
-                                    renderItem={renderMenuItem}
-                                    keyExtractor={item => item.id.toString()} //keyExtractor take string as value. 
-                                />
-                            </Card>
+                            <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
+                                <RenderHistory />
+                                <Card title="Corporate Leadership">
+                                    <FlatList
+                                        data={this.props.leaders.leaders} // each element in array becomes item
+                                        renderItem={renderMenuItem}
+                                        keyExtractor={item => item.id.toString()} //keyExtractor take string as value. 
+                                    />
+                                </Card>
+                            </Animatable.View>
                         </ScrollView>
                     </SafeAreaView>
                 );
