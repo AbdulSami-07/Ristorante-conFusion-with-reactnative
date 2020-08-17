@@ -216,7 +216,7 @@ class Dishdetail extends Component {
                             leftIcon={
                                 <Icon
                                     type='font-awesome'
-                                    name='user'
+                                    name='user-o'
                                     size={24}
                                     color='black'
                                 />
@@ -228,7 +228,7 @@ class Dishdetail extends Component {
                             leftIcon={
                                 <Icon
                                     type='font-awesome'
-                                    name='comment'
+                                    name='comment-o'
                                     size={24}
                                     color='black'
                                 />
