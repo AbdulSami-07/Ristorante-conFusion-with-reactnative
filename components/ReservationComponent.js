@@ -4,6 +4,9 @@ import { Card, Icon } from 'react-native-elements';
 import DatePicker from 'react-native-datepicker';
 import moment from 'moment';
 import * as Animatable from 'react-native-animatable';
+import * as Permissions from 'expo-permissions';
+import * as Notifications from 'expo-notifications';
+
 
 class Reservation extends Component{
 
@@ -43,11 +46,41 @@ class Reservation extends Component{
                 },
                 {
                     text: 'OK',
-                    onPress : () => {console.log(this.state); this.resetForm();}
+                    onPress : () => {
+                        console.log(this.state);
+                        this.persentLocalNotification(moment(new Date(this.state.date)).format('LLL'));
+                        this.resetForm();
+                    }
                 }
             ],
             { cancelable: false} //for disabling dismissing behavior
         );
+    }
+
+    async obtainNotificationPermission(){
+        let permisson = await Permissions.getAsync(Permissions.USER_FACING_NOTIFICATIONS);
+        if (permisson.status !== 'granted'){
+            permisson = await Permissions.getAsync(Permissions.USER_FACING_NOTIFICATIONS);
+            if (permisson.status !== 'granted')
+                Alert.alert('Permission not granted to show notifications');
+        }
+        return permisson;     
+    }
+
+    async persentLocalNotification(date){
+        await this.obtainNotificationPermission();
+        Notifications.presentNotificationAsync({
+            title: 'Your Reservation',
+            body: 'Reservation for ' + date + ' requested',
+            ios : {
+                sound : true
+            },
+            android : {
+                sound : true,
+                vibrate: true,
+                color: '#512DAB'
+            }
+        });
     }
 
     render() {
