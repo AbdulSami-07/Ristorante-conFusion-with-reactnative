@@ -64,9 +64,9 @@ function RenderDish(props){
 
     const recognizeDrag = ({moveX, moveY, dx, dy}) => {
         if (dx < -200) //Right to Left gesture
-            return true;
-        else
-            return ;
+            return 'rtl';
+        else if (dx > 200)
+            return 'ltr';
     };
 
     const panResponder = PanResponder.create({
@@ -74,13 +74,14 @@ function RenderDish(props){
         onStartShouldSetPanResponder: (evt, gestureState) =>{
             return true;
         },
+        //this is called when panResponder is grant perm to respond to gesture
         onPanResponderGrant: () => {
 
             this.view.rubberBand(1000)
                 .then(endState => console.log(endState.finished ? 'finished': 'cancelled'));
         },
         onPanResponderEnd: (evt, gestureState) => {
-            if (recognizeDrag(gestureState))
+            if (recognizeDrag(gestureState) === 'rtl')
                 Alert.alert(
                     'Add to Favorites',
                     'Are you sure you wish to add ' + dish.name + ' to your favorites?',
@@ -96,6 +97,9 @@ function RenderDish(props){
                         }
                     ]
                 );
+
+            else if (recognizeDrag(gestureState) === 'ltr')
+                    props.toggleModal();
 
             return true;
         }
