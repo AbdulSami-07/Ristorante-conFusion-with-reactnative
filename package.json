@@ -8,9 +8,11 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-community/datetimepicker": "2.4.0",
     "@react-native-community/netinfo": "5.9.2",
     "expo": "~38.0.8",
     "expo-asset": "~8.1.7",
+    "expo-calendar": "~8.2.2",
     "expo-image-manipulator": "~8.2.1",
     "expo-image-picker": "~8.3.0",
     "expo-mail-composer": "~8.2.1",
